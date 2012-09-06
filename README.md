@@ -15,8 +15,8 @@ When trying to serialize form data into a JSON object using jQuery.serializeArra
 
 ```html
 <form method="post">
-  <input type="hidden" name="field[]" value="value1" />
-  <input type="hidden" name="field[]" value="value1" />
+  <input type="hidden" name="field[0]" value="value1" />
+  <input type="hidden" name="field[1]" value="value1" />
 </form>
 ```
 
@@ -24,8 +24,8 @@ Resulting into this.
 
 ```javascript
 {
-  "field[]": "value1",
-  "field[]": "value2"
+  "field[0]": "value1",
+  "field[1]": "value2"
 }
 ```
 
@@ -41,11 +41,12 @@ Array(
 )
 ```
 
-If PHP were to interpret the previous example however (using JSON.parse() for instance) it would become this.
+If PHP were to interpret the previous example however (using json_decode() for instance) it would become this.
 
 ```
-Array(
-  ["field[]"] => "value2"
+stdClass Object(
+  [field[0]] => value1
+  [field[1]] => value2
 )
 ```
 
