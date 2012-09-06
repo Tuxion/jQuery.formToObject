@@ -35,8 +35,8 @@ However, PHP interprets this POST data and turns it into this.
 ```
 Array(
   [field] => Array(
-    [0] => "value1",
-    [1] => "value2"
+    [0] => value1,
+    [1] => value2
   )
 )
 ```
@@ -50,4 +50,15 @@ stdClass Object(
 )
 ```
 
-And that's a problem you'll run into with many AJAX/REST implementations with which you want to send JSON data from a form. This plugin is meant to solve that once and for all.
+And that's a problem you'll run into with many AJAX/REST implementations with which you want to send JSON data from a form.
+This plugin is meant to solve that once and for all.
+Meaning the result from this plugin will be this.
+
+```javascript
+{
+  "field": {
+    "0": "value1",
+    "1": "value2"
+  }
+}
+```
