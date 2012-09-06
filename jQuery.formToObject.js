@@ -7,7 +7,7 @@
  * @company Tuxion
  * @email beanow@project-virality.com
  * @licence: MIT
- * @link: TODO github...
+ * @link: https://github.com/Tuxion/jQuery.formToObject
  */
 
 (function($){
@@ -47,12 +47,13 @@
     
     //Check for a name="isindex" instance.
     //Returns [value]
-    if($(this).find(':input:enabled').eq(0).is('[type=text][name=isindex]')){
+    if($(this).find(':input:enabled, :input[type=hidden]').eq(0).is('[type=text][name=isindex]')){
       return [$(this).find(':input:enabled').eq(0).val()];
     }
     
     //Go over each input in the form.
-    $(this).find(':input:enabled').each(function(){
+    //Note: hidden fields are filtered by :enabled in jQuery versions before 1.8.
+    $(this).find(':input:enabled, :input[type=hidden]').each(function(){
       
       //Get a reference to the field.
       var field = $(this);
@@ -93,33 +94,20 @@
           //If it is the first instance, it's an error to have an empty string and the field should be ignored.
           if(isFirst) return true;
           
-          //If values have already been set with keys, we should simulate an autoincrement and keep the keys.
-          if(!$.isArray(target[nameParts[i]]) && target.length > 0){
+          //Find the highest number.
+          var maxNum = -1;
+          for(var key in target){
             
-            //Find the highest number.
-            var maxNum = -1;
-            for(var key in target){
-              
-              if(isNumber.test(key) && parseInt(key, 10) > maxNum)
-                maxNum = parseInt(key, 10);
-              
-            }
-            
-            //Perform the autoincrement! :D
-            maxNum++;
-            
-            //Set the value and store where we are.
-            target = (target[maxNum] = isLast ? getFieldValue(field) : target[nameParts[i]] || {});
+            if(isNumber.test(key) && parseInt(key, 10) > maxNum)
+              maxNum = parseInt(key, 10);
             
           }
           
-          //Otherwise we just push the value.
-          else{
-            if(!$.isArray(target[nameParts[i]])) target[nameParts[i]] = [];
-            var value = isLast ? getFieldValue(field) : target[nameParts[i]] || {};
-            target[nameParts[i]].push(value);
-            target = value;
-          }
+          //Perform the autoincrement! :D
+          maxNum++;
+          
+          //Set the value and store where we are.
+          target = (target[maxNum] = isLast ? getFieldValue(field) : {});
           
         }
         

@@ -16,7 +16,7 @@ When trying to serialize form data into a JSON object using jQuery.serializeArra
 ```html
 <form method="post">
   <input type="hidden" name="field[0]" value="value1" />
-  <input type="hidden" name="field[1]" value="value1" />
+  <input type="hidden" name="field[1]" value="value2" />
 </form>
 ```
 

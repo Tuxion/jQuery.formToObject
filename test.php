@@ -8,7 +8,7 @@
     <script type="text/javascript" src="jQuery.formToObject.js"></script>
     <script type="text/javascript">
       $(function(){
-        console.log('result', $('#form').formToObject());
+        console.log('result', $('#form').formToObject(), JSON.stringify($('#form').formToObject()));
       });
     </script>
   </head>
@@ -16,6 +16,8 @@
     <pre><?php print_r($_POST); ?></pre>
     <pre><?php print_r($_FILES); ?></pre>
     <form id="form" method="post" enctype="multipart/form-data" action="#">
+      <input type="hidden" name="field[]" value="value1" />
+      <input type="hidden" name="field[]" value="value2" />
       <input type="text" name="test[a][b]" value="1" />
       <input type="text" name="test[a][c]" value="2" />
       <input type="text" name="test[d][]" value="3" />
